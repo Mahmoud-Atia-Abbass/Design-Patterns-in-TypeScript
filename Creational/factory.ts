@@ -24,18 +24,19 @@ class ExcelFile implements FileOperations {
     }
 }
 
+interface FileProcessorFactoryModel {
+    createFileProcessor(fileName: string): FileOperations;
+}
+
 // Define a file processing factory that creates the appropriate file processor
-class FileProcessorFactory {
+class FileProcessorFactory implements FileProcessorFactoryModel {
     createFileProcessor(fileType: string): FileOperations {
-        if (fileType === 'pdf') {
-            return new PdfFile();
-        } else if (fileType === 'word') {
-            return new WordFile();
-        } else if (fileType === 'excel') {
-            return new ExcelFile();
-        } else {
-            throw new Error('Unsupported file type');
+        const processor = {
+            'pdf': new PdfFile(),
+            'word': new WordFile(),
+            'excel': new ExcelFile(),
         }
+        return processor[fileType] ?? console.log('Unsupported file type');
     }
 }
 
@@ -50,11 +51,11 @@ pdfFileProcessor.process(); // Output: Processing PDF file
 const wordFileProcessor = factory.createFileProcessor('word');
 wordFileProcessor.process(); // Output: Processing Word file
 
-// Create an Excel file processor and process the file
+// // Create an Excel file processor and process the file
 const excelFileProcessor = factory.createFileProcessor('excel');
 excelFileProcessor.process(); // Output: Processing Excel file
 
-// Try to create an unsupported file processor and handle the error
+// // Try to create an unsupported file processor and handle the error
 try {
     const unsupportedFileProcessor = factory.createFileProcessor('unsupported');
 } catch (e) {
