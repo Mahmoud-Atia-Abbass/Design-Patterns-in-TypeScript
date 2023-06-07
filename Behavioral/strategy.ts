@@ -68,8 +68,8 @@ class DisplayBW implements ICanDisplay {
         console.log('Duck that could DisplayBW...');
     }
 }
-const DuckDock = new Duck({ display: new DisplayColored() });
+const DuckDock = new Duck({ display: new DisplayColored(), fly: new JetFly() });
 DuckDock.display();
-DuckDock.fly();
-DuckDock.setDisplayStrategy(new DisplayBW());
-DuckDock.display();
+// DuckDock.fly();
+// DuckDock.setDisplayStrategy(new DisplayBW());
+// DuckDock.display();
